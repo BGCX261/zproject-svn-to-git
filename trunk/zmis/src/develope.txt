@@ -1,0 +1,95 @@
+project:k2jzlvya
+-------------------------------------------------------------------------------
+2012-8-6
+	项目搭建
+-------------------------------------------------------------------------------
+2012-8-13
+	Jpa实体注解
+		①@Table 可以设置对应数据库的表名
+		②@Entity 可定义实体在系统中的名称(供hql使用)
+		③@Column 数据库列定义
+		④@Id 数据库主键定义    @GeneratedValue主键生成方式
+		⑤@Transient 制定某些字段在数据库中不需要生成列名
+		⑥@Enumerated(EnumType.STRING) 枚举(枚举类型)
+		⑦@Embeddable 联合主键(必须implements Serializable)
+		⑧@@Temporal--TemporalType数据库日期bean
+	Jpa数据注解
+		@Repository 数据仓库(放于Dao中)
+		@Resource(name="userDaoImpl")  一般是在service中注入dao:(userDaoImpl)
+-------------------------------------------------------------------------------		
+2012-8-14
+	Jpa注解
+		1)@OneToMoney
+			cascade={CascadeType} 级联注解
+			optional是否必须存在   true:可以不存在  false:必须存在
+			fetch=FetchType.EAGER	数据抓取策略(立即加载)
+		2)@JoinColumn
+			可修改生成外键的名称
+		3)@ManyToMany
+			@JoinTable(name='ps', inverseJoinColumns={
+				@JoinColumn(name="column1", referencedColumnName="columns1"),    //columns1 为在Entity中列名
+				@JoinColumn(name="column1", referencedColumnName="columns2")     //columns2 为在Entity中列名
+			})
+	==================================================
+	Jpa规范：
+		<1>@OneToMany 
+			one为关系被维护端, 有mappedBy属性(多的一方属性)
+		<2>@ManyToOne (option=true 表示该属性的值可以没有)
+		<3>@ManyToMany
+	==================================================
+-------------------------------------------------------------------------------
+2012-8-16	(ejb3 分布式应用：需实现序列化接口)
+	spring 注解
+		@Service  >>>相当于spring配置中的bean元素
+		@Controller
+		@Repository
+		@Component
+-------------------------------------------------------------------------------
+2012-8-16
+	在Dao层中使用Transactional注解 <--->在不同的业务中可以使用不同的事务  如 delete find
+	@Transcational(readOnly=true, propagation=NOT_SUPPORTED) 表示：在find方法中不允许删除和修改数据， 不支持事务
+	public void find(...)      
+	
+	//aop 
+	//method EntityManager em 
+	//打开事务
+	
+	=====================
+		entityManager em
+			em.persist(object);
+			em.find(objectClass, entityId);
+			em.remove(em.getReference(entityClass, Id));
+			em.merge(entity); 
+			em.getReference(entityClass, entity) 得到某个实体的托管
+	===========================
+-------------------------------------------------------------------------------
+2012-8-21
+  LinkedHashMap:不会的添加的数据进行排序, 按添加的顺序进行排序
+-------------------------------------------------------------------------------
+2012-9-12
+ 	Jpa @MappedSuperclass 注解到类上, 只有其子类会生成数据库字段
+ 						  该类上面可以
+-------------------------------------------------------------------------------
+2012-9-13
+	struts2可以进行一下配置 						 
+	<action name="test.pagingAction" class="model/paging/pagingActioin">
+-------------------------------------------------------------------------------
+2012-9-26						 
+	JSTL <c:out />默认会对html元素进行格式化
+		<c:out escapeXml="false">
+-------------------------------------------------------------------------------
+2012-9-28
+	var parameters = new Object();
+	parameters.default_panel_name="#rc.panel_name#";
+	parameters.default_trigger_fields="#trigger_fields#";
+	Ext.apply(parameters,formPanelCmp.getForm().getValues());
+-------------------------------------------------------------------------------
+2012-10-3
+	让浏览器不进行缓存
+	response.setHeader("Cache-Control", "no-store");//http1.1
+	response.setHeader("Pragma", "no-cache");//http1.0
+	response.setHeader("Expires", 0);
+-------------------------------------------------------------------------------
+	/^1[358]\d{9}$/		
+	@Aspect
+	@Pointcut("execution(返回值  类名  方法(参数..))")

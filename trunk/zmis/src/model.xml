@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!--model Action	受权限控制-->
+	<package name="dataInterceptor" namespace="/" extends="json-default">
+		<!--分页功能模块	-->
+		<interceptors>
+			<interceptor name="loginInterceptor" class="com.zmis.model.page.interceptor.LoginInterceptor">
+				<param name="ignored"></param>
+			</interceptor>
+			<interceptor-stack name="dataInterceptor">
+				<interceptor-ref name="loginInterceptor"></interceptor-ref>
+				<interceptor-ref name="defaultStack"></interceptor-ref>
+			</interceptor-stack>
+		</interceptors>		
+		<!-- 后期实现整个系统的data权限 -->
+		<default-interceptor-ref name="dataInterceptor"></default-interceptor-ref>
+				
+	   	<action name="pagingAction" class="model/paging/pagingActioin">
+			<result name="success" type="json">/page/paging/pagingList.jsp</result>
+			<interceptor-ref name="dataInterceptor"></interceptor-ref>
+		</action>
+    </package>  
+    
+   <package name="noDataInterceptor" namespace="/" extends="json-default">
+   		<!--result type is redirectAction For Action to Action-->
+   		<!--登录模块	-->
+    	<action name="login" class="model/user/login">
+			<result name="success" type="redirect">/index.jsp</result>
+			<result name="login">/login.jsp</result>
+		</action>
+   </package>
+</struts>

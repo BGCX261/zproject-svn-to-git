@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
+	"http://struts.apache.org/dtds/struts-2.3.dtd">
+
+<struts>
+	<!--系统Action	-->
+	<package name="system" namespace="/" extends="struts-default">
+		<action name="fileupload" class="system/upload/fileupload">
+			<interceptor-ref name="token" />
+			<interceptor-ref name="defaultStack">
+				<param name="fileUpload.maximumSize">31457280</param><!-- 30M -->
+			</interceptor-ref>
+			<result name="invalid.token">/page/upload/upload.jsp</result>
+			<result name="input">/page/upload/upload.jsp</result>
+			<result name="success">/page/upload/success.jsp</result>
+		</action>
+	</package>
+	
+    <include file="model.xml"></include>
+    <constant name="struts.devMode" value="false" />
+    <constant name="struts.configuration.xml.reload" value="true" />
+    <constant name="struts.multipart.saveDir" value="c:\ztemp"></constant>
+	<constant name="struts.action.extension" value="asps,action,do"></constant>
+	<constant name="struts.multipart.maxSize" value="1073741824"/><!-- 1G:1073741824 -->
+	<constant name="struts.custom.i18n.resources" value="uploadfile"></constant>
+    <!-- Add packages here -->
+</struts>

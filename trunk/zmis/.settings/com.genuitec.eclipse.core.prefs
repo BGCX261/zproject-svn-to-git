@@ -1,0 +1,4 @@
+#Fri Sep 28 17:21:06 CST 2012
+eclipse.preferences.version=1
+validator.Checked=WebRoot/resources,WebRoot/extlib
+validator.Unchecked=
